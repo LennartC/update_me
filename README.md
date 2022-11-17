@@ -1,11 +1,13 @@
 # Update Me: self updating Rust executables
 
 update_me provides functionality to implement a self-updating Rust executable.
-The executable can update itself by replacing its executable file with a new version.
 
-Update Me takes inspiration from [James Kominick's self_update](https://github.com/jaemk/self_update),
-but unlike self_update, this library does not implement any backend system for downloading any artifacts,
-giving the developer more freedom to choose the repository he wants.
+The executable can update itself by replacing the current executing file with a newer version.
+
+This library only implements the updating mechanism itself, thereby providing full flexibility to implement different
+release distribution backends.
+
+Example of updating from a file:
 
 ```rust
 use update_me;
@@ -21,3 +23,9 @@ pub fn update(path: &String) -> Result<()> {
 }
 
 ```
+
+
+### See also
+
+* [self_update](https://github.com/jaemk/self_update): provides updaters for updating rust executables in-place
+  from various release distribution backends.
