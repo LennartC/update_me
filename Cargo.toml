@@ -1,0 +1,16 @@
+[package]
+name = "update_me"
+version = "0.1.0"
+description = "Utility to implement self-updating standalone executables"
+edition = "2021"
+license = "MIT"
+license-file = "LICENSE"
+keywords = ["update", "upgrade", "download", "release"]
+categories = ["command-line-utilities"]
+readme = "README.md"
+authors = ["Lennart Coopmans <lennart@lacerta.be>"]
+
+[dependencies]
+anyhow = { version = "1.0" }
+log = "0.4.17"
+tempfile = "3.3.0"
