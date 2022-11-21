@@ -1,3 +1,34 @@
+/*!
+[![crates.io:clin](https://img.shields.io/crates/v/update_me?label=update_me)](https://crates.io/crates/update_me)
+[![docs](https://docs.rs/self_update/badge.svg)](https://docs.rs/update_me/)
+`update_me` provides functionality to implement a self-updating Rust executable.
+
+The executable can update itself by replacing the current executing file with a newer version.
+
+This library only implements the updating mechanism itself, thereby providing full flexibility to implement different
+release distribution backends.
+
+Example of updating from a file:
+
+```rust
+use update_me;
+use std::fs::File;
+use std::io::Read;
+use anyhow::Result;
+
+pub fn update(path: &String) -> Result<()> {
+    let mut file = File::open(path)?;
+    let mut data: Vec<u8> = Vec::new();
+    file.read_to_end(&mut data)?;
+
+    update_me::apply(&mut data)?;
+
+    Ok(())
+}
+
+```
+ */
+
 use std::fs;
 use std::fs::File;
 use std::io::Write;
@@ -11,7 +42,6 @@ use log::info;
 use log::warn;
 use tempfile;
 use tempfile::NamedTempFile;
-
 
 pub fn apply(body: &[u8]) -> Result<()> {
     info!("Let's update!");
@@ -41,10 +71,15 @@ fn write_content(body: &[u8], path: &Path) -> Result<()> {
 
 fn replace(current_exe: &Path, new_exe: &Path) -> Result<()> {
     let temp_dir = tempfile::tempdir()?;
-    let bin_name = current_exe.file_name().context("No file name found for current exe.")?;
+    let bin_name = current_exe
+        .file_name()
+        .context("No file name found for current exe.")?;
     let tmp_backup_file = temp_dir.path().join(bin_name);
 
-    info!("Backing up current executable to {:?}...", tmp_backup_file.as_path());
+    info!(
+        "Backing up current executable to {:?}...",
+        tmp_backup_file.as_path()
+    );
 
     fs::rename(&current_exe, &tmp_backup_file.as_path())?;
     if let Err(e) = fs::rename(new_exe, &current_exe) {
@@ -65,8 +100,8 @@ fn replace(current_exe: &Path, new_exe: &Path) -> Result<()> {
 
 #[cfg(test)]
 mod tests {
-    use std::io::Read;
     use super::*;
+    use std::io::Read;
 
     #[test]
     fn test_replace() {

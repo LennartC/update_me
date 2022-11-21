@@ -1,3 +1,6 @@
+[![crates.io:clin](https://img.shields.io/crates/v/update_me?label=update_me)](https://crates.io/crates/update_me)
+[![docs](https://docs.rs/self_update/badge.svg)](https://docs.rs/update_me/)
+
 # Update Me: self updating Rust executables
 
 update_me provides functionality to implement a self-updating Rust executable.
